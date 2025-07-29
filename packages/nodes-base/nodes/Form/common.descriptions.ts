@@ -46,7 +46,7 @@ export const formFields: INodeProperties = {
 	name: 'formFields',
 	placeholder: 'Add Form Element',
 	type: 'fixedCollection',
-	default: { values: [{ label: '', fieldType: 'text' }] },
+	default: {},
 	typeOptions: {
 		multipleValues: true,
 		sortable: true,
@@ -57,7 +57,7 @@ export const formFields: INodeProperties = {
 			name: 'values',
 			values: [
 				{
-					displayName: 'Field Label',
+					displayName: 'Field Name',
 					name: 'fieldLabel',
 					type: 'string',
 					default: '',
@@ -66,7 +66,7 @@ export const formFields: INodeProperties = {
 					required: true,
 					displayOptions: {
 						hide: {
-							fieldType: ['hiddenField'],
+							fieldType: ['hiddenField', 'html'],
 						},
 					},
 				},
@@ -119,6 +119,19 @@ export const formFields: INodeProperties = {
 						},
 					],
 					required: true,
+				},
+				{
+					displayName: 'Element Name',
+					name: 'elementName',
+					type: 'string',
+					default: '',
+					placeholder: 'e.g. content-section',
+					description: 'Optional field. It can be used to include the html in the output.',
+					displayOptions: {
+						show: {
+							fieldType: ['html'],
+						},
+					},
 				},
 				{
 					displayName: 'Placeholder',
@@ -204,14 +217,16 @@ export const formFields: INodeProperties = {
 					},
 				},
 				{
-					displayName: 'HTML Template',
+					displayName: 'HTML',
 					name: 'html',
 					typeOptions: {
 						editor: 'htmlEditor',
 					},
 					type: 'string',
+					noDataExpression: true,
 					default: placeholder,
-					description: 'HTML template to render',
+					description: 'HTML elements to display on the form page',
+					hint: 'Does not accept <code>&lt;script&gt;</code>, <code>&lt;style&gt;</code> or <code>&lt;input&gt;</code> tags',
 					displayOptions: {
 						show: {
 							fieldType: ['html'],
@@ -253,18 +268,6 @@ export const formFields: INodeProperties = {
 					displayOptions: {
 						show: {
 							fieldType: ['date'],
-						},
-					},
-				},
-				{
-					displayName:
-						'Does not accept <code>&lt;style&gt;</code> <code>&lt;script&gt;</code> or <code>&lt;input&gt;</code> tags.',
-					name: 'htmlTips',
-					type: 'notice',
-					default: '',
-					displayOptions: {
-						show: {
-							fieldType: ['html'],
 						},
 					},
 				},
@@ -315,9 +318,9 @@ export const formTriggerPanel = {
 	header: 'Pull in a test form submission',
 	executionsHelp: {
 		inactive:
-			"Form Trigger has two modes: test and production. <br /> <br /> <b>Use test mode while you build your workflow</b>. Click the 'Test step' button, then fill out the test form that opens in a popup tab. The executions will show up in the editor.<br /> <br /> <b>Use production mode to run your workflow automatically</b>. <a data-key=\"activate\">Activate</a> the workflow, then make requests to the production URL. Then every time there's a form submission via the Production Form URL, the workflow will execute. These executions will show up in the executions list, but not in the editor.",
+			"Form Trigger has two modes: test and production. <br /> <br /> <b>Use test mode while you build your workflow</b>. Click the 'Execute step' button, then fill out the test form that opens in a popup tab. The executions will show up in the editor.<br /> <br /> <b>Use production mode to run your workflow automatically</b>. <a data-key=\"activate\">Activate</a> the workflow, then make requests to the production URL. Then every time there's a form submission via the Production Form URL, the workflow will execute. These executions will show up in the executions list, but not in the editor.",
 		active:
-			"Form Trigger has two modes: test and production. <br /> <br /> <b>Use test mode while you build your workflow</b>. Click the 'Test step' button, then fill out the test form that opens in a popup tab. The executions will show up in the editor.<br /> <br /> <b>Use production mode to run your workflow automatically</b>. <a data-key=\"activate\">Activate</a> the workflow, then make requests to the production URL. Then every time there's a form submission via the Production Form URL, the workflow will execute. These executions will show up in the executions list, but not in the editor.",
+			"Form Trigger has two modes: test and production. <br /> <br /> <b>Use test mode while you build your workflow</b>. Click the 'Execute step' button, then fill out the test form that opens in a popup tab. The executions will show up in the editor.<br /> <br /> <b>Use production mode to run your workflow automatically</b>. <a data-key=\"activate\">Activate</a> the workflow, then make requests to the production URL. Then every time there's a form submission via the Production Form URL, the workflow will execute. These executions will show up in the executions list, but not in the editor.",
 	},
 	activationHint: {
 		active:
